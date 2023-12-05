@@ -170,7 +170,7 @@ public class ViewMenuPrincipal extends JFrame {
 				}
 			    Operacoes operacao= new Operacoes();
 				JOptionPane.showMessageDialog(null,
-						operacao.Insert(idDois,Nome,quantidadeDois)+idDois+Nome+quantidadeDois,
+						operacao.Insert(idDois,Nome,quantidadeDois),
 		                "PopUp Dialog",
 		                JOptionPane.INFORMATION_MESSAGE);
 				}

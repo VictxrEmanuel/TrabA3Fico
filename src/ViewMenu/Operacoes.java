@@ -28,14 +28,15 @@ public class Operacoes {
 			String sql="INSERT INTO produtos (ID,Nome,Quantidade) VALUES ("+ids+",'"+nome_s+"',"+qtds+");";
 	        PreparedStatement pstm = conn.prepareStatement(sql);
 			 pstm.execute(sql);
-		       ret="funciona";
+		       ret="Item adicionado com sucesso";
 	       
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			JOptionPane.showMessageDialog(null,
-	                "Não foi possível realizar a operação coloque valores válidos/n O ID não pode se repetir",
+			/*JOptionPane.showMessageDialog(null,
+	                "Não foi possível realizar a operação coloque valores válidos\n O ID não pode se repetir",
 	                "PopUp Dialog",
-	                JOptionPane.INFORMATION_MESSAGE);
+	                JOptionPane.INFORMATION_MESSAGE);*/
+			ret= "Não foi possível realizar a operação coloque valores válidos\n O ID não pode se repetir";
 		}
  return ret;
         
@@ -64,15 +65,11 @@ public class Operacoes {
 	       
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			JOptionPane.showMessageDialog(null,
-	                "Não foi possível realizar a operação"+"\nDELETE FROM produtos WHERE ID2="+ids+"",
+			/*JOptionPane.showMessageDialog(null,
+	                "Não foi possível realizar a operação",
 	                "PopUp Dialog",
-	                JOptionPane.INFORMATION_MESSAGE);
-			JOptionPane.showMessageDialog(null,
-	                conn.toString(),
-	                "PopUp Dialog",
-	                JOptionPane.INFORMATION_MESSAGE);
-			System.out.println(e.toString());
+	                JOptionPane.INFORMATION_MESSAGE);*/
+			ret="Não foi possível realizar a operação";
 		}
         
 	}
@@ -82,10 +79,11 @@ public class Operacoes {
 		}
 		}
 		catch(SQLException e) {
-			JOptionPane.showMessageDialog(null,
-	                "Não foi possível realizar a operação"+"\nDELETE FROM produtos WHERE ID1="+ids+"",
+			/*JOptionPane.showMessageDialog(null,
+	                "Não foi possível realizar a operação",
 	                "PopUp Dialog",
-	                JOptionPane.INFORMATION_MESSAGE);
+	                JOptionPane.INFORMATION_MESSAGE);*/
+			ret= "Não foi possível realizar a operação";
 		}
 		return ret;
 
@@ -114,28 +112,25 @@ public class Operacoes {
 		       
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				JOptionPane.showMessageDialog(null,
-		                "Não foi possível realizar a operação"+"\nDELETE FROM produtos WHERE ID2="+ids+"",
+				/*JOptionPane.showMessageDialog(null,
+		                "Não foi possível realizar a operação",
 		                "PopUp Dialog",
-		                JOptionPane.INFORMATION_MESSAGE);
-				JOptionPane.showMessageDialog(null,
-		                conn.toString(),
-		                "PopUp Dialog",
-		                JOptionPane.INFORMATION_MESSAGE);
-				System.out.println(e.toString());
+		                JOptionPane.INFORMATION_MESSAGE);*/
+				retu="Não foi possível realizar a operação";
 			}
 	        
 		}
 			else
 			{
-				ret="Coloque um ID válido";	
+				retu="Coloque um ID válido";	
 			}
 			}
 			catch(SQLException e) {
-				JOptionPane.showMessageDialog(null,
-		                "Não foi possível realizar a operação"+"\nDELETE FROM produtos WHERE ID1="+ids+"",
+				/*JOptionPane.showMessageDialog(null,
+		                "Não foi possível realizar a operação",
 		                "PopUp Dialog",
-		                JOptionPane.INFORMATION_MESSAGE);
+		                JOptionPane.INFORMATION_MESSAGE);*/
+				retu="Não foi possível realizar a operação";
 			}
 		/*PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setString(1, username);
