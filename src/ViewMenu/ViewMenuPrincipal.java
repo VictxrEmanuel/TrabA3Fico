@@ -1,6 +1,11 @@
 package ViewMenu;
 import ViewMenu.Operacoes;
-import ViewMenu.conexao;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Connection;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -8,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JTextField;
 import java.awt.Color;
 import javax.swing.SwingConstants;
@@ -17,6 +23,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import java.awt.Font;
+import javax.swing.JScrollPane;
 
 public class ViewMenuPrincipal extends JFrame {
 
@@ -26,9 +33,8 @@ public class ViewMenuPrincipal extends JFrame {
 	private JTextField quantidade;
 	private JTextField id;
 	private static ViewMenuPrincipal frame = new ViewMenuPrincipal();
-	private JTable table;
+	private static JTable table;
 	
-
 	/**
 	 * Launch the application.
 	 */
@@ -37,11 +43,57 @@ public class ViewMenuPrincipal extends JFrame {
 			public void run() {
 				try {
 				frame.setVisible(true);
+				carregaraTabela();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+	}
+	static void carregaraTabela()
+	{
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		model.setNumRows(0);
+		model.setColumnCount(3);
+		String[]Indices=new String[3];
+		Indices[0]="ID";
+		Indices[1]="Nome";
+		Indices[2]="Quantidade";
+		model.setColumnIdentifiers(Indices);
+		table.getColumnModel().getColumn(0).setPreferredWidth(600);
+		table.getColumnModel().getColumn(1).setPreferredWidth(700);
+		table.getColumnModel().getColumn(2).setPreferredWidth(800);
+		Connection conn = null;
+		Operacoes operacao = new Operacoes();
+		 try {
+			   conn  = DriverManager.getConnection(Operacoes.jdbcUrl,Operacoes.user,Operacoes.password);
+			    } catch ( SQLException e1) {
+			        System.out.println("Conexão mal sucedida!");
+			    }
+			try {
+			String sql = "SELECT * FROM produtos";
+			PreparedStatement pstm = conn.prepareStatement(sql);
+			ResultSet rs = pstm.executeQuery();
+			while(rs.next())
+			{
+			 model.addRow(new Object[] {
+					 rs.getInt(1),
+					 rs.getString(2),
+					 rs.getInt(3)
+			 });
+			}
+			conn.close();
+			pstm.close();
+			rs.close();
+			
+			}
+			catch(SQLException e)
+			{
+				JOptionPane.showMessageDialog(null,
+		                "Houve um erro ao carregar a tabela",
+		                "PopUp Dialog",
+		                JOptionPane.INFORMATION_MESSAGE);
+			}
 	}
 
 	/**
@@ -133,7 +185,8 @@ public class ViewMenuPrincipal extends JFrame {
 			                JOptionPane.INFORMATION_MESSAGE);
 					
 					
-				}
+				} 
+				carregaraTabela();
 				
 		}});
 		botaoAdicionar.setBounds(271, 93, 89, 60);
@@ -157,7 +210,7 @@ public class ViewMenuPrincipal extends JFrame {
 			               "Para remover algum item da tabela o campo ID deve ser preenchido corretamente\n ID-Apenas números",
 			                "PopUp Dialog",
 			                JOptionPane.INFORMATION_MESSAGE);
-				}
+				}carregaraTabela();
 			
 		}});
 		botaoExcluir.setForeground(Color.WHITE);
@@ -190,6 +243,7 @@ public class ViewMenuPrincipal extends JFrame {
 			                "PopUp Dialog",
 			                JOptionPane.INFORMATION_MESSAGE);
 					}
+					carregaraTabela();
 				}
 				catch(java.lang.NumberFormatException nexc)
 				{
@@ -198,8 +252,8 @@ public class ViewMenuPrincipal extends JFrame {
 			                "PopUp Dialog",
 			                JOptionPane.INFORMATION_MESSAGE);
 				}
-			}
-		});
+				}
+						});
 		botaoAtualizar.setForeground(Color.WHITE);
 		botaoAtualizar.setBackground(new Color(0, 191, 255));
 		botaoAtualizar.setBounds(514, 93, 89, 60);
@@ -220,8 +274,11 @@ public class ViewMenuPrincipal extends JFrame {
 		lblNome.setBounds(0, 114, 43, 14);
 		contentPane.add(lblNome);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(112, 191, 581, 263);
+		contentPane.add(scrollPane);
+		
 		table = new JTable();
-		table.setBounds(22, 190, 661, 253);
-		contentPane.add(table);
+		scrollPane.setViewportView(table);
 	}
 }

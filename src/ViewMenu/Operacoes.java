@@ -33,14 +33,9 @@ public class Operacoes {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			JOptionPane.showMessageDialog(null,
-	                "Não foi possível realizar a operação"+"\ninsert into produtos (ID, Nome, Quantidade)"+ids+","+nome_s+","+qtds+"",
+	                "Não foi possível realizar a operação coloque valores válidos/n O ID não pode se repetir",
 	                "PopUp Dialog",
 	                JOptionPane.INFORMATION_MESSAGE);
-			JOptionPane.showMessageDialog(null,
-	                conn.toString(),
-	                "PopUp Dialog",
-	                JOptionPane.INFORMATION_MESSAGE);
-			System.out.println(e.toString());
 		}
  return ret;
         
@@ -93,13 +88,6 @@ public class Operacoes {
 	                JOptionPane.INFORMATION_MESSAGE);
 		}
 		return ret;
-	/*PreparedStatement pstmt = con.prepareStatement(sql);
-	pstmt.setString(1, username);
-	pstmt.setString(2, password);
-	ResultSet rs = pstmt.executeQuery();
-	if (rs.next()) {
-	    //read the data from ResultSet
-	}*/
 
 }
 	public String Update(int id,String nome_u,int qtdu)
@@ -159,5 +147,6 @@ public class Operacoes {
 		
 		return retu;
 		}
-}
 
+
+}
